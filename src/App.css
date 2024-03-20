@@ -3,6 +3,10 @@
   width:500px;
 }
 
+.box h1, h2{
+  text-align: center;
+}
+
 .item-img{
   width:400px;
   margin-left: 50px;
@@ -13,3 +17,16 @@
   display: flex;
   justify-content: center;
 }
+
+button{
+  margin-top: 10px;
+  margin-left: 10px;
+  width: 100px;
+  height: 80px;
+  background-color: lightblue;
+  font-weight: bold;
+}
+
+.win {  background-color: green; color:white; }
+.lose {  background-color: red; color:white; }
+.tie {  background-color: black; color:white; }
