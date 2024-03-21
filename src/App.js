@@ -1,88 +1,74 @@
-import { useState } from 'react';
+import React, { Component } from 'react';
 import './App.css';
-import Box from"./component/Box"
+import Box from "./component/Box";
 
-
-//1. 박스 2개(타이틀, 사진, 결과)
-//2. 가위 바위 보 버튼이 있다.
-//3. 버튼을 클릭하면 클릭한 값이 박스에 보임
-//4. 컴퓨터는 랜덤하게 선택이 된다.
-//5. 3과 4의 결과로 승패 나눔
-//6. 승패 결과에 따라 박스 테두리 색상 변경(승리-초록, 패배-빨강, 무-검정) 
-
-const choice ={
-  rock:{
-    name:"Rock",
-    img:"https://images.unsplash.com/photo-1614032686163-bdc24c13d0b6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8JUVBJUIwJTgwJUVDJTlDJTg0JUVCJUIwJTk0JUVDJTlDJTg0JUVCJUIzJUI0fGVufDB8fDB8fHww"
+const choice = {
+  rock: {
+    name: "Rock",
+    img: "https://images.unsplash.com/photo-1614032686163-bdc24c13d0b6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8JUVBJUIwJTgwJUVDJTlDJTg0JUVCJUIwJTk0JUVDJTlDJTg0JUVCJUIzJUI0fGVufDB8fDB8fHww"
   },
-  scissors:{
-    name:"Scissors",
-    img:"https://images.unsplash.com/photo-1614032686099-e648d6dea9b3?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8JUVBJUIwJTgwJUVDJTlDJTg0JUVCJUIwJTk0JUVDJTlDJTg0JUVCJUIzJUI0fGVufDB8fDB8fHww"
+  scissors: {
+    name: "Scissors",
+    img: "https://images.unsplash.com/photo-1614032686099-e648d6dea9b3?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8JUVBJUIwJTgwJUVDJTlDJTg0JUVCJUIwJTk0JUVDJTlDJTg0JUVCJUIzJUI0fGVufDB8fDB8fHww"
   },
-  paper:{
-    name:"Paper",
-    img:"https://images.unsplash.com/photo-1614032686158-b880f7e82c18?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8JUVBJUIwJTgwJUVDJTlDJTg0JUVCJUIwJTk0JUVDJTlDJTg0JUVCJUIzJUI0fGVufDB8fDB8fHww"
+  paper: {
+    name: "Paper",
+    img: "https://images.unsplash.com/photo-1614032686158-b880f7e82c18?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8JUVBJUIwJTgwJUVDJTlDJTg0JUVCJUIwJTk0JUVDJTlDJTg0JUVCJUIzJUI0fGVufDB8fDB8fHww"
   }
-}
-function App() {
-const[userSelect, setUserSelect] = useState(null)
-const[computerSelect, setComputerSelect] = useState(null)
-const[result,setResult]=useState("")
-  const play=(userChoice)=>{
-    setUserSelect (choice[userChoice])
-    let computerChoice = randomChoice()
-    setComputerSelect(computerChoice)
-    setResult(judgement(choice[userChoice], computerChoice))
-  };
-
-const judgement = (user,computer)=>{
-
-  // user === computer tie
-  // user == rock, computer == "scissors" user이김
-  // user == rock, computer == paper user짐
-  // user == scissors computer paper user이김
-  // user == paper computer rock user이김
-  //user paper computer siccors user이김
-
-  // if(user.name === computer.name){
-  //   return "tie"
-  // }else if(user.name==="Rock"){
-  //   if(computer === "Scissors"){
-  //     return "Win"
-  //   }else{
-  //     return "lose"
-  //   }
-  //   }
-  // }
-
-  if(user.name === computer.name){
-    return "tie"
-  }else if(user.name==="Rock")return computer.name==="Scissors" ? "win":"lose"
-else if (user.name==="Scissors")return computer.name==="Paper" ? "win":"lose"
-else if(user.name=== "Paper") return computer.name === "Rock" ? "win":"lose"
 };
 
-  const randomChoice=()=>{
-    let itemArray = Object.keys(choice); //객체에 키값만 뽑아서 어레이로 만들어주는 함수
-    console.log("item array", itemArray)
-    let randomItem = Math.floor (Math.random() * itemArray.length);
-let final = itemArray[randomItem]
-return choice[final];
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userSelect: null,
+      computerSelect: null,
+      result: ""
+    };
   }
 
-  return(
-    <div>
-    <div className="main">
-     <Box title="You" item={userSelect} result={result} />
-     <Box title="Computer" item={computerSelect} result={result}/>
-    </div>
-    <div className="main">
-      <button onClick={() => play("scissors")}>가위</button>
-      <button onClick={() => play("rock")}>바위</button>
-      <button onClick={() => play("paper")}>보</button>
-    </div>
-    </div>
-  );
-} 
+  play = (userChoice) => {
+    this.setState({ userSelect: choice[userChoice] });
+    let computerChoice = this.randomChoice();
+    this.setState({ computerSelect: computerChoice });
+    this.setState({ result: this.judgement(choice[userChoice], computerChoice) });
+  };
 
-export default App; 
+  judgement = (user, computer) => {
+    if (user.name === computer.name) {
+      return "tie";
+    } else if (user.name === "Rock") {
+      return computer.name === "Scissors" ? "win" : "lose";
+    } else if (user.name === "Scissors") {
+      return computer.name === "Paper" ? "win" : "lose";
+    } else if (user.name === "Paper") {
+      return computer.name === "Rock" ? "win" : "lose";
+    }
+  };
+
+  randomChoice = () => {
+    let itemArray = Object.keys(choice);
+    let randomItem = Math.floor(Math.random() * itemArray.length);
+    let final = itemArray[randomItem];
+    return choice[final];
+  };
+
+  render() {
+    const { userSelect, computerSelect, result } = this.state;
+
+    return (
+      <div>
+        <div className="main">
+          <Box title="You" item={userSelect} result={result} />
+          <Box title="Computer" item={computerSelect} result={result} />
+        </div>
+        <div className="main">
+          <button onClick={() => this.play("scissors")}>가위</button>
+          <button onClick={() => this.play("rock")}>바위</button>
+          <button onClick={() => this.play("paper")}>보</button>
+        </div>
+      </div>
+    );
+  }
+}
+
